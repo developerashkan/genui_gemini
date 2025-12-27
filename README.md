@@ -7,10 +7,7 @@ Enable your Flutter apps with AI-driven interfaces — the AI decides which UI c
 
 ## Demo
 
-## Demo
-
 [▶ Watch demo video](https://github.com/user-attachments/assets/38f4f012-d9bd-4ad6-b6b8-8e733650747c)
-
 
 ---
 

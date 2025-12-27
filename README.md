@@ -7,10 +7,17 @@ Enable your Flutter apps with AI-driven interfaces — the AI decides which UI c
 
 ## Demo
 
+### Inline Preview
+
 <video width="600" controls>
-  <source src="assets/demo/genui.webm" type="video/webm">
+  <source src="https://github.com/developerashkan/genui_gemini/releases/download/v0.1.0/genui.mp4" type="video/webm">
   Your browser does not support the video tag.
 </video>
+
+### Download
+
+[Download the demo video](https://github.com/developerashkan/genui_gemini/releases/download/v0.1.0/genui.mp4)
+
 
 ---
 

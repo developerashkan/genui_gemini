@@ -5,6 +5,15 @@ Enable your Flutter apps with AI-driven interfaces — the AI decides which UI c
 
 ---
 
+## Demo
+
+<video width="600" controls>
+  <source src="assets/demo/genui.webm" type="video/webm">
+  Your browser does not support the video tag.
+</video>
+
+---
+
 ## Features
 
 - AI-driven UI generation: Gemini AI selects the best UI components for each user query.

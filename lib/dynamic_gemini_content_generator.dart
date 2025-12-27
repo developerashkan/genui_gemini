@@ -5,7 +5,6 @@ import 'package:genui/genui.dart' as genUI;
 import 'package:genui_gemini/api.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
 
-
 class DynamicGeminiContentGenerator implements genUI.ContentGenerator {
   final String apiKey;
   final genUI.Catalog catalog;

@@ -87,52 +87,37 @@ class _DynamicGenUIAppState extends State<DynamicGenUIApp> {
     final textCard = genUI.CatalogItem(
       name: 'TextCard',
       dataSchema: dsb.S.object(
-        properties: {
-          'text': dsb.S.string(description: 'The text response'),
-        },
+        properties: {'text': dsb.S.string(description: 'The text response')},
         required: ['text'],
       ),
       widgetBuilder: (ctx) => _buildTextCard(ctx),
     );
 
-    final customCatalog = genUI.Catalog(
-      [weatherCard, infoCard, listCard, forecastCard, textCard],
-      catalogId: 'dynamic-catalog',
-    );
+    final customCatalog = genUI.Catalog([weatherCard, infoCard, listCard, forecastCard, textCard], catalogId: 'dynamic-catalog');
 
-    _messageProcessor = genUI.A2uiMessageProcessor(
-      catalogs: [
-        genUI.CoreCatalogItems.asCatalog(),
-        customCatalog,
-      ],
-    );
+    _messageProcessor = genUI.A2uiMessageProcessor(catalogs: [genUI.CoreCatalogItems.asCatalog(), customCatalog]);
 
-    final contentGenerator = DynamicGeminiContentGenerator(
-      apiKey: GeminiApi.apiKey,
-      catalog: customCatalog,
-    );
+    final contentGenerator = DynamicGeminiContentGenerator(apiKey: GeminiApi.apiKey, catalog: customCatalog);
 
     _conversation = genUI.GenUiConversation(
       a2uiMessageProcessor: _messageProcessor,
       contentGenerator: contentGenerator,
       onSurfaceAdded: (update) {
-        debugPrint('✅ Surface added: ${update.surfaceId}');
+        debugPrint('Surface added: ${update.surfaceId}');
         setState(() => _activeSurfaceIds.add(update.surfaceId));
       },
       onSurfaceDeleted: (update) {
-        debugPrint('🗑️ Surface deleted: ${update.surfaceId}');
+        debugPrint('Surface deleted: ${update.surfaceId}');
         setState(() => _activeSurfaceIds.remove(update.surfaceId));
       },
       onTextResponse: (text) {
-        debugPrint('✅ Text Response: $text');
+        debugPrint('Text Response: $text');
         setState(() => _textResponses.add(text));
       },
       onError: (error) {
-        debugPrint('❌ Error: ${error.error}');
+        debugPrint('Error: ${error.error}');
         if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Error: ${error.error}'), backgroundColor: Colors.red),
-          );
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Error: ${error.error}'), backgroundColor: Colors.red));
         }
       },
     );
@@ -159,11 +144,7 @@ class _DynamicGenUIAppState extends State<DynamicGenUIApp> {
               return Container(
                 margin: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: _getWeatherColors(condVal ?? 'sunny'),
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                  ),
+                  gradient: LinearGradient(colors: _getWeatherColors(condVal ?? 'sunny'), begin: Alignment.topLeft, end: Alignment.bottomRight),
                   borderRadius: BorderRadius.circular(20),
                   boxShadow: [BoxShadow(color: Colors.black26, blurRadius: 10, offset: const Offset(0, 5))],
                 ),
@@ -181,14 +162,20 @@ class _DynamicGenUIAppState extends State<DynamicGenUIApp> {
                               children: [
                                 const Icon(Icons.location_on, color: Colors.white, size: 18),
                                 const SizedBox(width: 4),
-                                Text(cityVal ?? 'Unknown', style: const TextStyle(color: Colors.white, fontSize: 22, fontWeight: FontWeight.bold)),
+                                Text(
+                                  cityVal ?? 'Unknown',
+                                  style: const TextStyle(color: Colors.white, fontSize: 22, fontWeight: FontWeight.bold),
+                                ),
                               ],
                             ),
                             const SizedBox(height: 4),
                             Text(condVal ?? 'Unknown', style: const TextStyle(color: Colors.white70, fontSize: 16)),
                           ],
                         ),
-                        Text(tempVal ?? '--', style: const TextStyle(color: Colors.white, fontSize: 48, fontWeight: FontWeight.w300)),
+                        Text(
+                          tempVal ?? '--',
+                          style: const TextStyle(color: Colors.white, fontSize: 48, fontWeight: FontWeight.w300),
+                        ),
                       ],
                     ),
                     if (humVal != null) ...[
@@ -234,8 +221,8 @@ class _DynamicGenUIAppState extends State<DynamicGenUIApp> {
           valueListenable: icon,
           builder: (_, iconVal, __) {
             return Card(
+              color: Colors.white,
               margin: const EdgeInsets.all(12),
-              elevation: 4,
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
               child: Padding(
                 padding: const EdgeInsets.all(16),
@@ -265,21 +252,31 @@ class _DynamicGenUIAppState extends State<DynamicGenUIApp> {
 
   IconData _getInfoIcon(String icon) {
     switch (icon.toLowerCase()) {
-      case 'warning': return Icons.warning_amber_rounded;
-      case 'success': return Icons.check_circle;
-      case 'error': return Icons.error;
-      case 'question': return Icons.help;
-      default: return Icons.info;
+      case 'warning':
+        return Icons.warning_amber_rounded;
+      case 'success':
+        return Icons.check_circle;
+      case 'error':
+        return Icons.error;
+      case 'question':
+        return Icons.help;
+      default:
+        return Icons.info;
     }
   }
 
   Color _getInfoColor(String icon) {
     switch (icon.toLowerCase()) {
-      case 'warning': return Colors.orange;
-      case 'success': return Colors.green;
-      case 'error': return Colors.red;
-      case 'question': return Colors.purple;
-      default: return Colors.blue;
+      case 'warning':
+        return const Color(0xFFFBBF24);
+      case 'success':
+        return const Color(0xFF4ADE80);
+      case 'error':
+        return const Color(0xFFF87171);
+      case 'question':
+        return const Color(0xFFA78BFA);
+      default:
+        return const Color(0xFF60A5FA);
     }
   }
 
@@ -296,7 +293,6 @@ class _DynamicGenUIAppState extends State<DynamicGenUIApp> {
           final itemList = (itemsVal ?? '').split(',').map((e) => e.trim()).where((e) => e.isNotEmpty).toList();
           return Card(
             margin: const EdgeInsets.all(12),
-            elevation: 4,
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
             child: Padding(
               padding: const EdgeInsets.all(16),
@@ -305,16 +301,18 @@ class _DynamicGenUIAppState extends State<DynamicGenUIApp> {
                 children: [
                   Text(titleVal ?? 'List', style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                   const Divider(),
-                  ...itemList.map((item) => Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 4),
-                    child: Row(
-                      children: [
-                        const Icon(Icons.arrow_right, size: 20, color: Colors.blue),
-                        const SizedBox(width: 8),
-                        Expanded(child: Text(item, style: const TextStyle(fontSize: 15))),
-                      ],
+                  ...itemList.map(
+                    (item) => Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 4),
+                      child: Row(
+                        children: [
+                          const Icon(Icons.arrow_right, size: 20, color: Colors.blue),
+                          const SizedBox(width: 8),
+                          Expanded(child: Text(item, style: const TextStyle(fontSize: 15))),
+                        ],
+                      ),
                     ),
-                  )),
+                  ),
                 ],
               ),
             ),
@@ -348,7 +346,6 @@ class _DynamicGenUIAppState extends State<DynamicGenUIApp> {
                 builder: (_, rainVal, __) {
                   return Card(
                     margin: const EdgeInsets.all(12),
-                    elevation: 4,
                     color: Colors.indigo.shade50,
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
                     child: Padding(
@@ -372,8 +369,7 @@ class _DynamicGenUIAppState extends State<DynamicGenUIApp> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(condVal ?? 'Unknown', style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
-                                  if (highVal != null || lowVal != null)
-                                    Text('High: ${highVal ?? "--"} / Low: ${lowVal ?? "--"}', style: TextStyle(color: Colors.grey.shade600)),
+                                  if (highVal != null || lowVal != null) Text('High: ${highVal ?? "--"} / Low: ${lowVal ?? "--"}', style: TextStyle(color: Colors.grey.shade600)),
                                 ],
                               ),
                             ],
@@ -419,12 +415,22 @@ class _DynamicGenUIAppState extends State<DynamicGenUIApp> {
       valueListenable: text,
       builder: (_, textVal, __) {
         return Card(
-          margin: const EdgeInsets.all(12),
-          elevation: 2,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+          margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
+          color: Colors.white,
           child: Padding(
-            padding: const EdgeInsets.all(16),
-            child: Text(textVal ?? '', style: const TextStyle(fontSize: 15, height: 1.6)),
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+            child: Text(
+              textVal ?? '',
+              style: const TextStyle(
+                fontSize: 16,
+                height: 1.5,
+                fontWeight: FontWeight.w500,
+                color: Colors.black87,
+              ),
+            ),
           ),
         );
       },
@@ -434,7 +440,7 @@ class _DynamicGenUIAppState extends State<DynamicGenUIApp> {
   void _sendMessage() {
     final text = _textController.text.trim();
     if (text.isEmpty) return;
-    debugPrint('📤 Sending: $text');
+    debugPrint('Sending: $text');
     _conversation.sendRequest(genUI.UserMessage.text(text));
     _textController.clear();
   }
@@ -442,71 +448,118 @@ class _DynamicGenUIAppState extends State<DynamicGenUIApp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBodyBehindAppBar: true,
       appBar: AppBar(
         title: const Text('GenUI Gemini Assistant'),
-        surfaceTintColor: Theme.of(context).scaffoldBackgroundColor,
-        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         centerTitle: true,
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        surfaceTintColor: Colors.transparent,
       ),
-      body: SafeArea(
-        child: Column(
-          children: [
-            Expanded(
-              child: _activeSurfaceIds.isEmpty && _textResponses.isEmpty
-                  ? const Center(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text('Ask me anything!', style: TextStyle(fontSize: 18, color: Colors.grey)),
-                    SizedBox(height: 8),
-                    Text('Weather, forecasts, general questions...', style: TextStyle(color: Colors.grey)),
-                  ],
-                ),
-              )
-                  : ListView.builder(
-                padding: const EdgeInsets.all(8),
-                itemCount: _activeSurfaceIds.length,
-                itemBuilder: (context, index) {
-                  return genUI.GenUiSurface(
-                    host: _conversation.host,
-                    surfaceId: _activeSurfaceIds[index],
-                  );
-                },
+
+      body: Stack(
+        children: [
+          Container(
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  Colors.white,
+                  Color(0xFFEEFDF9),
+                ],
               ),
             ),
-            _buildInputBar(),
-          ],
-        ),
+          ),
+          SafeArea(
+            child: Column(
+              children: [
+                Expanded(
+                  child: AnimatedSwitcher(
+                    duration: const Duration(milliseconds: 250),
+                    child: (_activeSurfaceIds.isEmpty && _textResponses.isEmpty)
+                        ? Center(
+                      key: const ValueKey('empty-state'),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            'Ask me anything',
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleMedium
+                                ?.copyWith(
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .onSurfaceVariant,
+                            ),
+                          ),
+                          const SizedBox(height: 6),
+                          Text(
+                            'Weather, forecasts, general questions…',
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium
+                                ?.copyWith(
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .onSurfaceVariant,
+                            ),
+                          ),
+                        ],
+                      ),
+                    )
+                        : ListView.separated(
+                      key: const ValueKey('content-list'),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 12,
+                        vertical: 8,
+                      ),
+                      itemCount: _activeSurfaceIds.length,
+                      separatorBuilder: (_, __) =>
+                      const SizedBox(height: 8),
+                      itemBuilder: (context, index) {
+                        return genUI.GenUiSurface(
+                          host: _conversation.host,
+                          surfaceId: _activeSurfaceIds[index],
+                        );
+                      },
+                    ),
+                  ),
+                ),
+                _buildInputBar(),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
-
   Widget _buildInputBar() {
     return SafeArea(
-      child: Container(
+      top: false,
+      child: Padding(
         padding: const EdgeInsets.all(12),
-        child: Row(
-          children: [
-            Expanded(
-              child: TextField(
-                controller: _textController,
-                decoration: InputDecoration(
-                  hintText: 'Ask anything...',
-                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(24)),
-                  contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                ),
-                onSubmitted: (_) => _sendMessage(),
-              ),
+        child: TextField(
+          controller: _textController,
+          textInputAction: TextInputAction.send,
+          decoration: InputDecoration(
+            hintText: 'Type a message...',
+            filled: true,
+            fillColor: Colors.white,
+            suffixIcon: IconButton(
+              icon: const Icon(Icons.send),
+              onPressed: _sendMessage,
             ),
-            const SizedBox(width: 8),
-            CircleAvatar(
-              backgroundColor: Colors.indigo,
-              child: IconButton(
-                icon: const Icon(Icons.send, color: Colors.white),
-                onPressed: _sendMessage,
-              ),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(36),
+              borderSide: BorderSide.none,
             ),
-          ],
+            contentPadding: const EdgeInsets.all(
+            12
+            ),
+          ),
+          onSubmitted: (_) => _sendMessage(),
         ),
       ),
     );

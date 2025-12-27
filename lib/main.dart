@@ -4,8 +4,5 @@ import 'package:genui_gemini/dynamic_genui_app.dart';
 
 Future<void> main() async {
   await dotenv.load(fileName: ".env");
-  runApp(const MaterialApp(home: DynamicGenUIApp()));
+  runApp(const MaterialApp(debugShowCheckedModeBanner: false,home: DynamicGenUIApp()));
 }
-
-
-

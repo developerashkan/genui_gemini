@@ -10,7 +10,7 @@ Enable your Flutter apps with AI-driven interfaces — the AI decides which UI c
 ### Inline Preview
 
 <video width="600" controls>
-  <source src="https://github.com/developerashkan/genui_gemini/releases/download/v0.1.0/genui.mp4" type="video/webm">
+  <source src="https://github.com/developerashkan/genui_gemini/releases/download/v0.1.0/genui.mp4" type="video/mp4">
   Your browser does not support the video tag.
 </video>
 
@@ -18,25 +18,26 @@ Enable your Flutter apps with AI-driven interfaces — the AI decides which UI c
 
 [Download the demo video](https://github.com/developerashkan/genui_gemini/releases/download/v0.1.0/genui.mp4)
 
-
 ---
 
 ## Features
 
-- AI-driven UI generation: Gemini AI selects the best UI components for each user query.
-- Natural language conversation: Interact with your app in plain language.
-- Multiple component support: WeatherCard, InfoCard, ListCard, and more.
-- Dynamic surfaces: UI updates in real time based on AI decisions.
-- Secure API key management: Supports `.env` or `--dart-define` to keep keys safe.
+- **AI-driven UI generation:** Gemini AI selects the best UI components for each user query.
+- **Natural language conversation:** Interact with your app using plain language.
+- **Multiple component support:** Includes WeatherCard, InfoCard, ListCard, and more.
+- **Dynamic surfaces:** UI updates in real-time based on AI decisions.
+- **Secure API key management:** Supports `.env` files or `--dart-define` to keep API keys safe.
 
 ---
 
 ## Installation
 
-Add the required dependencies in your `pubspec.yaml`:
+Add the required dependencies to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
+  flutter:
+    sdk: flutter
   cupertino_icons: ^1.0.8
   genui: ^0.6.0
   google_generative_ai: ^0.4.7
